@@ -1,20 +1,30 @@
-Temp/
-Library/
+# Unity
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/Assets/AssetStoreTools*
+sysinfo.txt
+*.pidb.meta
+ 
+# VS/Rider/MD/Consulo
 ExportedObj/
-obj/
-*.svd
-*.userprefs
-/*.csproj
-*.pidb
-*.suo
-/*.sln
-*.user
+.consulo/
+.idea/
+*.csproj
 *.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
 *.booproj
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+*.svd
+ 
+# Builds
+*.apk
+*.unitypackage
+*.app
+*.exe
