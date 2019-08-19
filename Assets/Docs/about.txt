@@ -1,0 +1,5 @@
+1.
+The game is about moving through the tunnel with the chance of meeting monster. The main target is the reward at the end of the road. To avoid monster you meet you should go back as fast as you can. When the monster appears you need quickly start moving backward.
+The view of player is fixed on the way where the reward is (even when the player moves backward). It's dark in the tunnel, so the player must listen to monster's coming.
+The more you get forward the more you get expiriance points. You can spent XP to upgrade your characteristics as such as length of light, speed of movement backward (or foward..), luck, maximum of health points, learning ration that accelerates growth of XP.
+When the monster gets you, you are losing HP.

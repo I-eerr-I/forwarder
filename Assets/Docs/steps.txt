@@ -1,0 +1,14 @@
+1. The First-Step Game:
+	Player moves forward and backward through the dark tunnel. He gains XP for new meters he moved forward. The more meters he moved, the more chance to meet monster. If player meets monster, the monster moves straight to the player. If the monster gets player, player loses HP.
+	Player has start max HP. He gains XP from new meters. When player idles, he can spent XP to upgrade skills:
+		- Max HP
+		- Length of light
+		- Speed of movement
+		- Learning ration
+		- Luck
+	To avoid monster, player must move backward until the monster desapears.
+	To calculate player's XP the riched meters is used:
+		XP = C * New_Meters
+	C - learning ration
+	
+	The luck of the player is about chance to meet monster and chance to avoid it.
