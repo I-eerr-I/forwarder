@@ -262,16 +262,7 @@ MonoBehaviour:
   player: {fileID: 3585793481799898414, guid: c60e5531612bf5b4db1535984426c3ee, type: 3}
   enemies:
   - {fileID: 5517436323864546169, guid: 88e84884a469da14391436d691407548, type: 3}
-  - {fileID: 5517436323864546169, guid: 704678d3759ff3f4f8e557417decd57a, type: 3}
-  startWall: {fileID: 7904133982464298267, guid: 89c1a14f9dd5cdc489e7ab393f508652,
-    type: 3}
-  endWall: {fileID: 7904133982464298267, guid: 711671441ec3331469e4e9a72bb8c244, type: 3}
-  walls:
-  - {fileID: 4162915883803170015, guid: 5a1d370488acd494b93434aed603ec44, type: 3}
-  - {fileID: 3209691715684185657, guid: 23690cb95fa11b94383b4d346bbe6ba9, type: 3}
-  - {fileID: 2292999383456639112, guid: 97a76b7e138ed2943853a7501d88e6ff, type: 3}
-  - {fileID: 150542301868585066, guid: cbf7ba5c7a1b39641acf51e0a5259d88, type: 3}
-  cornerWall: {fileID: 3006768818421834789, guid: 2225d6b481fe755448d316fa024c6dab,
-    type: 3}
+  - {fileID: 3787732866031941674, guid: b01aa5e51c79ef047a99a1bfd21a3b4a, type: 3}
   minTunnelLength: 250
   maxTunnelLength: 500
+  wall: {fileID: 1706025108191253672, guid: e283f33ee15e5bb469afd1702ad5dea1, type: 3}

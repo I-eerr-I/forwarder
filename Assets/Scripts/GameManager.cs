@@ -7,12 +7,16 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject[] enemies;
-    public GameObject startWall;
-    public GameObject endWall;
-    public GameObject[] walls;
-    public GameObject cornerWall;
     public float minTunnelLength;
     public float maxTunnelLength;
+
+    // public GameObject startWall;
+    // public GameObject endWall;
+    // public GameObject[] walls;
+    // public GameObject cornerWall;
+
+    //new Wall system, using sprites
+    public GameObject wall;
 
     private GameObject wallHolder;
 
@@ -54,34 +58,66 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //new InitWalls for sprite walls
     void InitWalls()
     {
-        float tunnelLength = Random.Range(minTunnelLength, maxTunnelLength);
-        
-        for(int i = 1; i < tunnelLength/cornerWall.transform.localScale.z; i++)
-        {
-            int sign = (Random.Range(0f,1f) > 0.5)? 1 : -1;
-            GameObject game_cornerWall = Instantiate(cornerWall);
-            game_cornerWall.transform.position = new Vector3(sign * game_cornerWall.transform.position.x,
-                                                             game_cornerWall.transform.position.y,
-                                                             game_cornerWall.transform.position.z * i);
-            AttachToWallHolder(game_cornerWall);
-        }
+        float tunnelLength   = Random.Range(minTunnelLength, maxTunnelLength);
 
-        GameObject game_startWall = Instantiate(startWall);
-        GameObject game_endWall   = Instantiate(endWall);
-        game_endWall.transform.position += new Vector3(0, 0, tunnelLength);
-        AttachToWallHolder(game_endWall);
-        AttachToWallHolder(game_startWall);
+        GameObject startWall = Instantiate(wall, wall.transform.position, Quaternion.identity);
+        startWall.name = "StartWall";
+        SpriteRenderer startSprite = startWall.GetComponent<SpriteRenderer>();
+        float startX = startWall.transform.position.x;
+        float startY = startWall.transform.position.y;
+        float startZ = startWall.transform.position.z;
+        startWall.transform.Rotate(0, 180f, 0);
 
-        foreach(GameObject wall in walls)
-        {
-            GameObject game_wall = Instantiate(wall);
-            game_wall.transform.position   += new Vector3(0, 0, tunnelLength);
-            game_wall.transform.localScale += new Vector3(0, 0, 2*tunnelLength);
-            AttachToWallHolder(game_wall);
-        }
+        GameObject endWall   = Instantiate(wall);
+        endWall.name = "EndWall";
+        endWall.transform.position = new Vector3(startX, startY, startZ + tunnelLength);
+        endWall.transform.Rotate(0, 180f, 0);
+
+        GameObject leftWall = Instantiate(wall);
+        leftWall.name = "LeftWall";
+        SpriteRenderer leftSprite = leftWall.GetComponent<SpriteRenderer>();
+        leftWall.transform.Rotate(0,-90f,0);
+        leftSprite.size = new Vector2(tunnelLength, leftSprite.size.y);
+        leftWall.transform.position = new Vector3(startSprite.size.x/2, startY, leftSprite.size.x/2);
+
+        GameObject rightWall = Instantiate(leftWall);
+        rightWall.name = "RightWall";
+        rightWall.transform.Rotate(0,180f,0);
+        rightWall.transform.position = new Vector3(-leftWall.transform.position.x, startY, leftWall.transform.position.z);
+
     }
+
+    // void InitWalls()
+    // {
+    //     float tunnelLength = Random.Range(minTunnelLength, maxTunnelLength);
+        
+    //     for(int i = 1; i < tunnelLength/cornerWall.transform.localScale.z; i++)
+    //     {
+    //         int sign = (Random.Range(0f,1f) > 0.5)? 1 : -1;
+    //         GameObject game_cornerWall = Instantiate(cornerWall);
+    //         game_cornerWall.transform.position = new Vector3(sign * game_cornerWall.transform.position.x,
+    //                                                          game_cornerWall.transform.position.y,
+    //                                                          game_cornerWall.transform.position.z * i);
+    //         AttachToWallHolder(game_cornerWall);
+    //     }
+
+    //     GameObject game_startWall = Instantiate(startWall);
+    //     GameObject game_endWall   = Instantiate(endWall);
+    //     game_endWall.transform.position += new Vector3(0, 0, tunnelLength);
+    //     AttachToWallHolder(game_endWall);
+    //     AttachToWallHolder(game_startWall);
+
+    //     foreach(GameObject wall in walls)
+    //     {
+    //         GameObject game_wall = Instantiate(wall);
+    //         game_wall.transform.position   += new Vector3(0, 0, tunnelLength);
+    //         game_wall.transform.localScale += new Vector3(0, 0, 2*tunnelLength);
+    //         AttachToWallHolder(game_wall);
+    //     }
+    // }
 
     void AttachToWallHolder(GameObject wall)
     {
