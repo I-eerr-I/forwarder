@@ -12,14 +12,14 @@ public class AppearanceChars : MonoBehaviour
 
     private GameObject player;
 
-    public void SetPlayer(GameObject player)
+    public void SetPlayer(ref GameObject player)
     {
         this.player = player;
     }
 
-    public GameObject GetPlayer()
+    public ref GameObject GetPlayer()
     {
-        return player;
+        return ref player;
     }
 
 }

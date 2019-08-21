@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public GameObject wall;
 
     [Space]
+    public UIManager uiManager;
+
+    [Space]
     public bool debug;
 
     private GameObject wallHolder;
@@ -22,7 +25,13 @@ public class GameManager : MonoBehaviour
         wallHolder = new GameObject("Wall Holder");
         player = Instantiate(player);
         pc = player.GetComponent<PlayerController>();
+        uiManager.SetPlayer(ref player, ref pc);
         InitWalls();
+    }
+
+    void Start()
+    {
+        
     }
 
     void Update()
@@ -69,7 +78,7 @@ public class GameManager : MonoBehaviour
         GameObject game_enemy = Instantiate(enemy);
         Debug.Log("Enemy was born at " + game_enemy.transform.position.z.ToString());
         Debug.Log("Distance to player: " + distance.ToString());
-        game_enemy.GetComponent<AppearanceChars>().SetPlayer(player);
+        game_enemy.GetComponent<AppearanceChars>().SetPlayer(ref player);
     }
 
     void InitWalls()

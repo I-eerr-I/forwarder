@@ -44,7 +44,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
             if(distance_to_run <= 0)
             {
                 Debug.Log(gameObject.name + ": DEAD BECAUSE OF DISTANCE <= 0!");
-                started_dying = true;
+                Destroy(gameObject);
             }
             if(start_position - distance_to_run < transform.position.z)
             {

@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public int   xpPoints      = 0;
     
     private int hp;
+    private float maxLevelXP;
 
     private float last_max_position;
 
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
         InitUpgradable();
         xp = 0f;
         hp = maxHP;
+        UpdateMaxLevelXP();
         last_max_position = transform.position.z;
         rigidbody = GetComponent<Rigidbody>();
         light     = GetComponent<Light>();
@@ -93,6 +95,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpdateMaxLevelXP()
+    {
+        maxLevelXP = level/learnRate;
+    }
+
+    public float GetMaxLevelXP()
+    {
+        return maxLevelXP;
+    }
+
     void UpdateXP()
     {
         if(transform.position.z > last_max_position)
@@ -104,11 +116,12 @@ public class PlayerController : MonoBehaviour
 
     void LevelUp()
     {
-        if(xp >= level / learnRate)
+        if(xp >= maxLevelXP)
         {
             Debug.Log("XP: " + xp.ToString());
             xp = 0f;
             level++;
+            UpdateMaxLevelXP();
             xpPoints++;
             Debug.Log("LEVEL: " + level.ToString());
             Debug.Log("XPPOINTS: " + xpPoints.ToString());
