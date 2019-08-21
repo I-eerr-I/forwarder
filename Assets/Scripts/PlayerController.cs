@@ -65,14 +65,13 @@ public class PlayerController : MonoBehaviour
     {
         if(xpPoints > 0)
         {
-            // int index = Random.Range(0, upgradable.Count);
-            int index = Random.Range(1, upgradable.Count-1);
+            int index = Random.Range(0, upgradable.Count);
             switch(index)
             {
-                // case 0:
-                //     maxHP += UPGRADE_MAXHP;
-                //     Debug.Log("Upgraded Max HP");
-                //     break;
+                case 0:
+                    maxHP += UPGRADE_MAXHP;
+                    Debug.Log("Upgraded Max HP");
+                    break;
                 case 1:
                     speed += UPGRADE_SPEED;
                     Debug.Log("Upgraded Speed");
@@ -85,10 +84,10 @@ public class PlayerController : MonoBehaviour
                     lightStrength += UPGRADE_LIGHTSTRENGTH;
                     Debug.Log("Upgraded light strength");
                     break;
-                // case 4:
-                //     luck += UPGRADE_LUCK;
-                //     Debug.Log("Upgraded luck");
-                //     break;
+                case 4:
+                    luck += UPGRADE_LUCK;
+                    Debug.Log("Upgraded luck");
+                    break;
             }
             xpPoints--;
         }
@@ -123,7 +122,7 @@ public class PlayerController : MonoBehaviour
     
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Enemy")
+        if(col.gameObject.CompareTag("Enemy"))
         {  
             Debug.Log("HIT!");
             hp--;

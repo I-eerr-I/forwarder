@@ -9,4 +9,17 @@ public class AppearanceChars : MonoBehaviour
 
     public float minDistanceToPlayer;
     public float maxDistanceToPlayer;
+
+    private GameObject player;
+
+    public void SetPlayer(GameObject player)
+    {
+        this.player = player;
+    }
+
+    public GameObject GetPlayer()
+    {
+        return player;
+    }
+
 }
