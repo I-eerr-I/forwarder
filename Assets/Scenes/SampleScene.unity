@@ -874,9 +874,8 @@ MonoBehaviour:
   player: {fileID: 3585793481799898414, guid: c60e5531612bf5b4db1535984426c3ee, type: 3}
   enemies:
   - {fileID: 3787732866031941674, guid: b01aa5e51c79ef047a99a1bfd21a3b4a, type: 3}
-  minTunnelLength: 250
-  maxTunnelLength: 500
   wall: {fileID: 1706025108191253672, guid: e283f33ee15e5bb469afd1702ad5dea1, type: 3}
+  tunnelLength: 300
   uiManager: {fileID: 1601950402}
   debug: 0
 --- !u!1 &1538048389

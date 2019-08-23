@@ -7,9 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject[] enemies;
-    public float minTunnelLength;
-    public float maxTunnelLength;
     public GameObject wall;
+    public float tunnelLength;
 
     [Space]
     public UIManager uiManager;
@@ -83,7 +82,6 @@ public class GameManager : MonoBehaviour
 
     void InitWalls()
     {
-        float tunnelLength   = Random.Range(minTunnelLength, maxTunnelLength);
 
         GameObject startWall = Instantiate(wall, wall.transform.position, Quaternion.identity);
         startWall.name = "StartWall";

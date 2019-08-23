@@ -11,6 +11,8 @@ public abstract class EnemyBehaviour : MonoBehaviour
     public float minRunDistance;
     public float deadRunDistance;
 
+    public Light light;
+
     protected float maxRunDistance;
     protected float start_position;
     protected float distance_to_run;
@@ -58,7 +60,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
         }
         else
         {
-            GetComponent<Light>().intensity *= 2;
+            light.intensity *= 2;
             started_dying = true;
         }
         if(started_dying)

@@ -5,6 +5,8 @@ using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
+    public Light light;
+
     public int   maxHP         = 1;
     public float speed         = 1f;
     public float learnRate     = 0.5f;
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
     private float UPGRADE_LUCK      = 0.01f;
 
     private Rigidbody rigidbody;
-    private Light light;
+    
 
     void Start()
     {
@@ -39,7 +41,7 @@ public class PlayerController : MonoBehaviour
         UpdateMaxLevelXP();
         last_max_position = transform.position.z;
         rigidbody = GetComponent<Rigidbody>();
-        light     = GetComponent<Light>();
+        // light     = GetComponent<Light>();
     }
 
     void Update()
