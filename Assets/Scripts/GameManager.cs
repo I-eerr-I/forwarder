@@ -7,8 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject[] enemies;
-    public GameObject wall;
-    public float tunnelLength;
 
     [Space]
     public UIManager uiManager;
@@ -16,21 +14,13 @@ public class GameManager : MonoBehaviour
     [Space]
     public bool debug;
 
-    private GameObject wallHolder;
     private PlayerController pc;
 
     void Awake()
     {
-        wallHolder = new GameObject("Wall Holder");
         player = Instantiate(player);
         pc = player.GetComponent<PlayerController>();
         uiManager.SetPlayer(ref player, ref pc);
-        InitWalls();
-    }
-
-    void Start()
-    {
-        
     }
 
     void Update()
@@ -78,44 +68,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Enemy was born at " + game_enemy.transform.position.z.ToString());
         Debug.Log("Distance to player: " + distance.ToString());
         game_enemy.GetComponent<AppearanceChars>().SetPlayer(ref player);
-    }
-
-    void InitWalls()
-    {
-
-        GameObject startWall = Instantiate(wall, wall.transform.position, Quaternion.identity);
-        startWall.name = "StartWall";
-        SpriteRenderer startSprite = startWall.GetComponent<SpriteRenderer>();
-        float startX = startWall.transform.position.x;
-        float startY = startWall.transform.position.y;
-        float startZ = startWall.transform.position.z;
-        startWall.transform.Rotate(0, 180f, 0);
-        AttachToWallHolder(startWall);
-
-        GameObject endWall   = Instantiate(wall);
-        endWall.name = "EndWall";
-        endWall.transform.position = new Vector3(startX, startY, startZ + tunnelLength);
-        endWall.transform.Rotate(0, 180f, 0);
-        AttachToWallHolder(endWall);
-
-        GameObject leftWall = Instantiate(wall);
-        leftWall.name = "LeftWall";
-        SpriteRenderer leftSprite = leftWall.GetComponent<SpriteRenderer>();
-        leftWall.transform.Rotate(0,-90f,0);
-        leftSprite.size = new Vector2(tunnelLength, leftSprite.size.y);
-        leftWall.transform.position = new Vector3(startSprite.size.x/2, startY, leftSprite.size.x/2);
-        AttachToWallHolder(leftWall);
-
-        GameObject rightWall = Instantiate(leftWall);
-        rightWall.name = "RightWall";
-        rightWall.transform.Rotate(0,180f,0);
-        rightWall.transform.position = new Vector3(-leftWall.transform.position.x, startY, leftWall.transform.position.z);
-        AttachToWallHolder(rightWall);
-    }
-
-    void AttachToWallHolder(GameObject wall)
-    {
-        wall.transform.SetParent(wallHolder.transform, true);
     }
 
 }

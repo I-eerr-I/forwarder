@@ -1,7 +1,16 @@
 fileFormatVersion: 2
-guid: f57adc08336811247808cb63e4e0dd09
+guid: e92d7fb35c228bf42846568eec8d6439
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -614303962619449801
+    second: Wall V1 Top
+  - first:
+      213: 8079713584380298592
+    second: Wall V1 Middle
+  - first:
+      213: -1348347509178866948
+    second: Wall V1 Bottom
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -46,7 +55,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 67, y: 32, z: 67, w: 32}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -84,11 +93,74 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Wall V1 Top
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 232
+        width: 130
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b199c1571696914590dce25a0775791
+      internalID: -614303962619449801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall V1 Middle
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 32
+        width: 130
+        height: 200
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a6c3c4a9a35ec4db92e19f7672119f
+      internalID: 8079713584380298592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Wall V1 Bottom
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 12
+        width: 130
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c22831295eb2c14f8cc09c833855dd2
+      internalID: -1348347509178866948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c0af5e31e4f4d62499c68528d22b6974
     internalID: 0
     vertices: []
     indices: 
@@ -97,7 +169,7 @@ TextureImporter:
     secondaryTextures: []
   spritePackingTag: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 1
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
