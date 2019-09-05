@@ -9,124 +9,64 @@ public class PlayerController : MonoBehaviour
 
     public int   maxHP         = 1;
     public float speed         = 1f;
-    public float learnRate     = 0.5f;
-    public float lightStrength = 3f;
-    public float luck          = 0.1f;
-
-    public float xp            = 0f;
-    public int   level         = 1;
-    public int   xpPoints      = 0;
+    public float lightOnTime   = 5f;
     
     private int hp;
-    private float maxLevelXP;
-
     private float last_max_position;
+    private float max_light = 3f;
+    private float min_light;
 
-    private ArrayList upgradable = new ArrayList();
+    private float movement;
 
-    private int   UPGRADE_MAXHP     = 1;
-    private float UPGRADE_SPEED     = 0.5f;
-    private float UPGRADE_LEARNRATE = 0.2f;
-    private float UPGRADE_LIGHTSTRENGTH = 1;
-    private float UPGRADE_LUCK      = 0.01f;
+    private int   UPGRADE_MAXHP       = 1;
+    private float UPGRADE_SPEED       = 0.5f;
+    private float UPGRADE_LIGHTONTIME = 1f;
 
     private Rigidbody rigidbody;
     
-
     void Start()
     {
-        InitUpgradable();
-        xp = 0f;
         hp = maxHP;
-        UpdateMaxLevelXP();
         last_max_position = transform.position.z;
         rigidbody = GetComponent<Rigidbody>();
-        // light     = GetComponent<Light>();
+        min_light = light.intensity;
     }
 
     void Update()
     {
-        light.range     = lightStrength;
-        light.intensity = lightStrength;
-        rigidbody.MovePosition(transform.position + (transform.forward * Input.GetAxis("Vertical") * speed * Time.deltaTime));
-        UpdateXP();
-        LevelUp();
-        RandomUpgrade();
+        movement = Input.GetAxis("Vertical");
+        if(transform.position.z > 0f || movement > 0)
+        {
+            rigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
+        }
+        if(Input.GetButtonDown("Fire1"))
+            StartCoroutine("LightOn");
+        if(Input.GetButtonUp("Fire1"))
+        {    
+            StopCoroutine("LightOn");
+            StartCoroutine("LightOff");
+        }
         if(hp <= 0)
             Death();
     }
 
-    void InitUpgradable()
+    IEnumerator LightOn()
     {
-        upgradable.Add(maxHP);
-        upgradable.Add(speed);
-        upgradable.Add(learnRate);
-        upgradable.Add(lightStrength);
-        upgradable.Add(luck);
-    }
-
-    void RandomUpgrade()
-    {
-        if(xpPoints > 0)
+        float light_strength = light.intensity;
+        for(; light_strength < max_light; light_strength += 0.1f)
         {
-            int index = Random.Range(0, upgradable.Count);
-            switch(index)
-            {
-                case 0:
-                    maxHP += UPGRADE_MAXHP;
-                    Debug.Log("Upgraded Max HP");
-                    break;
-                case 1:
-                    speed += UPGRADE_SPEED;
-                    Debug.Log("Upgraded Speed");
-                    break;
-                case 2:
-                    learnRate += UPGRADE_LEARNRATE;
-                    Debug.Log("Upgraded learn rate");
-                    break;
-                case 3:
-                    lightStrength += UPGRADE_LIGHTSTRENGTH;
-                    Debug.Log("Upgraded light strength");
-                    break;
-                case 4:
-                    luck += UPGRADE_LUCK;
-                    Debug.Log("Upgraded luck");
-                    break;
-            }
-            xpPoints--;
+            light.intensity = light_strength;
+            yield return null;
         }
     }
 
-    void UpdateMaxLevelXP()
+    IEnumerator LightOff()
     {
-        maxLevelXP = level/learnRate;
-    }
-
-    public float GetMaxLevelXP()
-    {
-        return maxLevelXP;
-    }
-
-    void UpdateXP()
-    {
-        if(transform.position.z > last_max_position)
+        float light_strength = light.intensity;
+        for(; light_strength > min_light; light_strength -= 0.1f)
         {
-            xp += learnRate*(transform.position.z - last_max_position);
-            last_max_position = transform.position.z;
-        }
-    }
-
-    void LevelUp()
-    {
-        if(xp >= maxLevelXP)
-        {
-            Debug.Log("XP: " + xp.ToString());
-            xp = 0f;
-            level++;
-            UpdateMaxLevelXP();
-            xpPoints++;
-            Debug.Log("LEVEL: " + level.ToString());
-            Debug.Log("XPPOINTS: " + xpPoints.ToString());
+            light.intensity = light_strength;
+            yield return null;
         }
     }
 

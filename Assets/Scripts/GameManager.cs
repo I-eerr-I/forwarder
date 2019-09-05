@@ -9,9 +9,6 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemies;
 
     [Space]
-    public UIManager uiManager;
-
-    [Space]
     public bool debug;
 
     private PlayerController pc;
@@ -20,7 +17,6 @@ public class GameManager : MonoBehaviour
     {
         player = Instantiate(player);
         pc = player.GetComponent<PlayerController>();
-        uiManager.SetPlayer(ref player, ref pc);
     }
 
     void Update()
@@ -35,8 +31,7 @@ public class GameManager : MonoBehaviour
         {
             GameObject enemy = enemies[0];
             AppearanceChars chars = enemy.GetComponent<AppearanceChars>();
-            if(pc.level >= chars.playerLevelToStart)
-                InitEnemy(enemy, chars);
+            InitEnemy(enemy, chars);
         }
         else
         {
@@ -48,10 +43,10 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("Analising enemy:" + enemy.name);
                     Debug.Log("Probability: "+ probability.ToString());
-                    Debug.Log("Real Prob: " + (chars.notActivityProbability + pc.luck).ToString());
-                    Debug.Log("Result: " + (probability > chars.notActivityProbability + pc.luck && pc.level > chars.playerLevelToStart).ToString());
+                    Debug.Log("Real Prob: " + (chars.notActivityProbability).ToString());
+                    Debug.Log("Result: " + (probability > chars.notActivityProbability).ToString());
                 }
-                if(probability > chars.notActivityProbability + pc.luck && pc.level >= chars.playerLevelToStart)
+                if(probability > chars.notActivityProbability)
                 {
                     InitEnemy(enemy, chars);
                     break;
