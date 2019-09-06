@@ -167,11 +167,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 1511247593}
-  maxHP: 1
-  speed: 1
-  learnRate: 0.5
-  lightStrength: 3
-  luck: 0.01
-  xp: 0
-  level: 1
-  xpPoints: 0
+  maxHP: 3
+  speed: 0.5
+  lightOnTime: 5

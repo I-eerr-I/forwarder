@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
-    public GameObject[] enemies;
+    public GameObject enemy;
 
     [Space]
     public bool debug;
@@ -22,46 +22,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if(!GameObject.FindWithTag("Enemy") && player.activeInHierarchy)
-            InitRandomEnemy();
+            InitEnemy();
     }
 
-    void InitRandomEnemy()
+    void InitEnemy()
     {
-        if(enemies.Length == 1)
-        {
-            GameObject enemy = enemies[0];
-            AppearanceChars chars = enemy.GetComponent<AppearanceChars>();
-            InitEnemy(enemy, chars);
-        }
-        else
-        {
-            foreach(GameObject enemy in enemies)
-            {
-                AppearanceChars chars = enemy.GetComponent<AppearanceChars>();
-                float probability = Random.Range(0f,1f);
-                if(debug)
-                {
-                    Debug.Log("Analising enemy:" + enemy.name);
-                    Debug.Log("Probability: "+ probability.ToString());
-                    Debug.Log("Real Prob: " + (chars.notActivityProbability).ToString());
-                    Debug.Log("Result: " + (probability > chars.notActivityProbability).ToString());
-                }
-                if(probability > chars.notActivityProbability)
-                {
-                    InitEnemy(enemy, chars);
-                    break;
-                }
-            }
-        }
-    }
-
-    void InitEnemy(GameObject enemy, AppearanceChars chars)
-    {
+        AppearanceChars chars = enemy.GetComponent<AppearanceChars>();
         float distance = Random.Range(chars.minDistanceToPlayer, chars.maxDistanceToPlayer);
         enemy.transform.position = new Vector3(0, enemy.transform.position.y, player.transform.position.z + distance);
         GameObject game_enemy = Instantiate(enemy);
-        Debug.Log("Enemy was born at " + game_enemy.transform.position.z.ToString());
-        Debug.Log("Distance to player: " + distance.ToString());
         game_enemy.GetComponent<AppearanceChars>().SetPlayer(ref player);
     }
 

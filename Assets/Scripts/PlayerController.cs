@@ -7,29 +7,25 @@ public class PlayerController : MonoBehaviour
 {
     public Light light;
 
-    public int   maxHP         = 1;
-    public float speed         = 1f;
+    public int   maxHP         = 3;
+    public float speed         = 0.5f;
     public float lightOnTime   = 5f;
     
     private int hp;
-    private float last_max_position;
-    private float max_light = 3f;
-    private float min_light;
+    private float maxLight = 3f;
+    private float minLight;
+    private float startLightTime;
+    private bool  isLightOn;
 
     private float movement;
-
-    private int   UPGRADE_MAXHP       = 1;
-    private float UPGRADE_SPEED       = 0.5f;
-    private float UPGRADE_LIGHTONTIME = 1f;
 
     private Rigidbody rigidbody;
     
     void Start()
     {
-        hp = maxHP;
-        last_max_position = transform.position.z;
+        hp        = maxHP;
         rigidbody = GetComponent<Rigidbody>();
-        min_light = light.intensity;
+        minLight  = light.intensity;
     }
 
     void Update()
@@ -40,10 +36,15 @@ public class PlayerController : MonoBehaviour
             rigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
         }
         if(Input.GetButtonDown("Fire1"))
+        {
+            startLightTime = Time.time;
+            isLightOn = true;
             StartCoroutine("LightOn");
-        if(Input.GetButtonUp("Fire1"))
+        }
+        if(Input.GetButtonUp("Fire1") || (isLightOn && Time.time - startLightTime > lightOnTime))
         {    
-            StopCoroutine("LightOn");
+            isLightOn = false;
+            Debug.Log("Time:" + (Time.time - startLightTime).ToString());
             StartCoroutine("LightOff");
         }
         if(hp <= 0)
@@ -52,20 +53,21 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator LightOn()
     {
-        float light_strength = light.intensity;
-        for(; light_strength < max_light; light_strength += 0.1f)
+        float lightStrength = light.intensity;
+        for(; lightStrength < maxLight; lightStrength += 0.1f)
         {
-            light.intensity = light_strength;
+            light.intensity = lightStrength;
             yield return null;
         }
     }
 
     IEnumerator LightOff()
     {
-        float light_strength = light.intensity;
-        for(; light_strength > min_light; light_strength -= 0.1f)
+        StopCoroutine("LightOn");
+        float lightStrength = light.intensity;
+        for(; lightStrength > minLight; lightStrength -= 0.1f)
         {
-            light.intensity = light_strength;
+            light.intensity = lightStrength;
             yield return null;
         }
     }
