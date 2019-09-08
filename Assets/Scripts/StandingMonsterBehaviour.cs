@@ -9,9 +9,11 @@ public class StandingMonsterBehaviour : EnemyBehaviour
     protected override void Action()
     {
         RaycastHit hit;
+
         if(Physics.Raycast(transform.position, -transform.forward, out hit, sightDistance))
         {
             rb.MovePosition(transform.position - (transform.forward * speed * Time.deltaTime));
+            isAction = true;
         }
     }
 }

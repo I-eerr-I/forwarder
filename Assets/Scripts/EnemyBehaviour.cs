@@ -8,54 +8,52 @@ public abstract class EnemyBehaviour : MonoBehaviour
     
     public float speed;
     public float power;
-    public float minRunDistance;
     public float deadRunDistance;
+    public float hp = 5f;
+    public AudioClip idlingSound;
+    public AudioClip actionSound;
 
     public Light light;
 
-    protected float maxRunDistance;
-    protected float startPosition;
-    protected float distanceToRun;
     protected bool  startedDying;
     protected bool  isDying;
     protected float deadStartPosition;
+    protected bool isAction;
 
     protected GameObject player;
     protected PlayerController pc;
     protected Rigidbody playerRb;
 
     protected Rigidbody rb;
+    protected BoxCollider boxCollider;
+    protected AudioSource audioSource;
 
     void Start()
     {
-        player   = GetComponent<AppearanceChars>().GetPlayer();
-        playerRb = player.GetComponent<Rigidbody>(); 
-        pc       = player.GetComponent<PlayerController>();
-        rb       = GetComponent<Rigidbody>();
-        maxRunDistance  = player.transform.position.z - minRunDistance;
-        startPosition   = transform.position.z;
-        distanceToRun   = Random.Range(player.transform.position.z, maxRunDistance);
-        startedDying    = false;
-        isDying         = false;
+        player           = GetComponent<AppearanceChars>().GetPlayer();
+        playerRb         = player.GetComponent<Rigidbody>(); 
+        pc               = player.GetComponent<PlayerController>();
+        rb               = GetComponent<Rigidbody>();
+        boxCollider      = GetComponent<BoxCollider>();
+        audioSource      = GetComponent<AudioSource>();
+        startedDying     = false;
+        isDying          = false;
+        isAction    = false;
+        audioSource.clip = idlingSound;
     }
 
     void Update()
     {
         if(player.activeInHierarchy)
         {
-            if(distanceToRun <= 0)
+            if(hp <= 0 && !isDying)
             {
-                Debug.Log(gameObject.name + ": DEAD BECAUSE OF DISTANCE <= 0!");
-                Destroy(gameObject);
-            }
-            if(startPosition - distanceToRun < transform.position.z)
-            {
-                Action();        
+                Debug.Log(gameObject.name + ": DEAD BECAUSE OF HP <= 0");
+                startedDying = true;
             }
             else
             {
-                Debug.Log(gameObject.name + ": DEAD BECAUSE OF RUNNING TOO MUCH!");
-                startedDying = true;
+                Action();        
             }
         }
         else
@@ -71,25 +69,52 @@ public abstract class EnemyBehaviour : MonoBehaviour
         }
         if(isDying)
             Death();
+        if(isAction && audioSource.clip != actionSound)
+        {
+            audioSource.clip = actionSound;
+            audioSource.Play();
+        }
+        if(!isAction)
+            audioSource.clip = idlingSound;
+
+        if(!audioSource.isPlaying)
+            audioSource.Play();
     }
 
     protected abstract void Action();
 
     protected virtual void Death()
     {
-        if(startPosition + deadRunDistance > transform.position.z)
+        if(deadStartPosition + deadRunDistance > transform.position.z)
+        {
+            Debug.Log("Need:" + (deadStartPosition + deadRunDistance).ToString() + " Current:" + transform.position.z.ToString());
             rb.MovePosition(transform.position + (transform.forward * (speed*2f) * Time.deltaTime));
+        }
+            
         else
             Destroy(gameObject);
     }
 
-     void OnCollisionEnter(Collision col)
+    void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.CompareTag("Player"))
         {
-            playerRb.AddForce(new Vector3(0,0, -power * Time.deltaTime), ForceMode.Impulse);
-            Debug.Log(gameObject.name + ": DEAD BECAUSE OF HIT!");
-            Death();
+            playerRb.AddForce(new Vector3(0,0, -power * Time.deltaTime));
+            StartCoroutine("TurnOffCollider");
         }
+    }
+
+    void OnTriggerStay(Collider col)
+    {
+        if(col.gameObject.CompareTag("Light Power Field"))
+        {
+            hp -= pc.lightPower * Time.deltaTime;
+        }
+    }
+
+    IEnumerator TurnOffCollider()
+    {
+        boxCollider.enabled = false;
+        yield return new WaitForSeconds(1f);
     }
 }

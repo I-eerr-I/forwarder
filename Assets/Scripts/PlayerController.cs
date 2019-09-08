@@ -6,30 +6,38 @@ using Random = UnityEngine.Random;
 public class PlayerController : MonoBehaviour
 {
     public Light light;
+    public SphereCollider lightPowerField;
 
     public int   maxHP         = 3;
     public float speed         = 0.5f;
     public float lightOnTime   = 5f;
+    public float lightPower    = 1f;
     
-    private int hp;
+    
+    public int hp;
     private float maxLight = 3f;
     private float minLight;
     private float startLightTime;
     private bool  isLightOn;
+    private bool  decreaseHP;
 
     private float movement;
 
     private Rigidbody rigidbody;
+    private BoxCollider boxCollider;
     
     void Start()
     {
-        hp        = maxHP;
-        rigidbody = GetComponent<Rigidbody>();
-        minLight  = light.intensity;
+        hp          = maxHP;
+        rigidbody   = GetComponent<Rigidbody>();
+        boxCollider = GetComponent<BoxCollider>();
+        minLight    = light.intensity;
+        lightPowerField.enabled = false;
     }
 
     void Update()
     {
+        lightPowerField.enabled = isLightOn;
         movement = Input.GetAxis("Vertical");
         if(transform.position.z > 0f || movement > 0)
         {
@@ -46,6 +54,11 @@ public class PlayerController : MonoBehaviour
             isLightOn = false;
             Debug.Log("Time:" + (Time.time - startLightTime).ToString());
             StartCoroutine("LightOff");
+        }
+        if(decreaseHP)
+        {
+            hp--;
+            decreaseHP = false;   
         }
         if(hp <= 0)
             Death();
@@ -77,12 +90,27 @@ public class PlayerController : MonoBehaviour
         gameObject.SetActive(false);
     }
     
+    void OnTriggerStay(Collider col)
+    {
+        if(col.gameObject.CompareTag("Hook With Lamp"))
+        {
+            if(Input.GetButtonDown("Jump") && hp < maxHP)
+            {
+                hp++;
+                col.enabled = false;
+                col.gameObject.GetComponent<Light>().enabled = false;
+            }
+        }
+    }
+
     void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.CompareTag("Enemy"))
-        {  
-            Debug.Log("HIT!");
-            hp--;
+        {
+            decreaseHP = true;
         }
     }
+
+    
+
 }

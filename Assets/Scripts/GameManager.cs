@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -9,14 +10,30 @@ public class GameManager : MonoBehaviour
     public GameObject enemy;
 
     [Space]
+    public GameObject hookWithLamp;
+
+    [Space]
     public bool debug;
 
     private PlayerController pc;
 
+    private GameObject[] hooks;
+
     void Awake()
     {
         player = Instantiate(player);
-        pc = player.GetComponent<PlayerController>();
+        pc     = player.GetComponent<PlayerController>();
+    }
+    
+    void Start()
+    {
+        hooks = GameObject.FindGameObjectsWithTag("Hook");
+        GameObject randomHook = hooks[Random.Range(0, hooks.Length)];
+        hookWithLamp = Instantiate(hookWithLamp);
+        hookWithLamp.transform.position = randomHook.transform.position;
+        hookWithLamp.transform.rotation = randomHook.transform.rotation;
+        Destroy(randomHook);
+        Debug.Log("Scene:" + SceneManager.GetActiveScene().buildIndex.ToString());
     }
 
     void Update()
