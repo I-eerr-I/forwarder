@@ -38,7 +38,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
         audioSource      = GetComponent<AudioSource>();
         startedDying     = false;
         isDying          = false;
-        isAction    = false;
+        isAction         = false;
         audioSource.clip = idlingSound;
     }
 
@@ -48,7 +48,6 @@ public abstract class EnemyBehaviour : MonoBehaviour
         {
             if(hp <= 0 && !isDying)
             {
-                Debug.Log(gameObject.name + ": DEAD BECAUSE OF HP <= 0");
                 startedDying = true;
             }
             else
@@ -72,13 +71,9 @@ public abstract class EnemyBehaviour : MonoBehaviour
         if(isAction && audioSource.clip != actionSound)
         {
             audioSource.clip = actionSound;
+            audioSource.volume += 10f;
             audioSource.Play();
         }
-        if(!isAction)
-            audioSource.clip = idlingSound;
-
-        if(!audioSource.isPlaying)
-            audioSource.Play();
     }
 
     protected abstract void Action();
@@ -87,7 +82,6 @@ public abstract class EnemyBehaviour : MonoBehaviour
     {
         if(deadStartPosition + deadRunDistance > transform.position.z)
         {
-            Debug.Log("Need:" + (deadStartPosition + deadRunDistance).ToString() + " Current:" + transform.position.z.ToString());
             rb.MovePosition(transform.position + (transform.forward * (speed*2f) * Time.deltaTime));
         }
             

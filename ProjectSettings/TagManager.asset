@@ -8,6 +8,8 @@ TagManager:
   - Hook
   - Hook With Lamp
   - Light Power Field
+  - Lamp
+  - Turned Off Lamp
   layers:
   - Default
   - TransparentFX

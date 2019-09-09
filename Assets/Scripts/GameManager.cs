@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public GameObject player;
     public GameObject enemy;
+    
+    [Space]
+    public UIManager uiManager;
 
     [Space]
     public GameObject hookWithLamp;
@@ -27,13 +30,13 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
+        uiManager.SetPlayerController(ref pc);
         hooks = GameObject.FindGameObjectsWithTag("Hook");
         GameObject randomHook = hooks[Random.Range(0, hooks.Length)];
         hookWithLamp = Instantiate(hookWithLamp);
         hookWithLamp.transform.position = randomHook.transform.position;
         hookWithLamp.transform.rotation = randomHook.transform.rotation;
         Destroy(randomHook);
-        Debug.Log("Scene:" + SceneManager.GetActiveScene().buildIndex.ToString());
     }
 
     void Update()

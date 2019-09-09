@@ -12,8 +12,9 @@ public class StandingMonsterBehaviour : EnemyBehaviour
 
         if(Physics.Raycast(transform.position, -transform.forward, out hit, sightDistance))
         {
-            rb.MovePosition(transform.position - (transform.forward * speed * Time.deltaTime));
             isAction = true;
         }
+        if(isAction)
+            rb.MovePosition(transform.position - (transform.forward * speed * Time.deltaTime));
     }
 }

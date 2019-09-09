@@ -10,20 +10,23 @@ public class PlayerController : MonoBehaviour
 
     public int   maxHP         = 3;
     public float speed         = 0.5f;
-    public float lightOnTime   = 5f;
     public float lightPower    = 1f;
-    
-    
+
+    [Space]
     public int hp;
-    private float maxLight = 3f;
+    
     private float minLight;
-    private float startLightTime;
+    private float maxLight          = 3f;
+    private float maxLightCountdown = 5f;
+    private float lightCountdown    = 0f;
+    private float maxLightTime      = 5f;
     private bool  isLightOn;
+    
     private bool  decreaseHP;
 
     private float movement;
 
-    private Rigidbody rigidbody;
+    private Rigidbody   rigidbody;
     private BoxCollider boxCollider;
     
     void Start()
@@ -37,24 +40,37 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetButtonDown("Fire1") && !isLightOn && lightCountdown <= 0f)
+        {
+            isLightOn      = true;
+            StartCoroutine("LightOn");
+        }
+        if(Input.GetButtonUp("Fire1") || !isLightOn)
+        {    
+            isLightOn      = false;
+            StartCoroutine("LightOff");
+        }
+        if(isLightOn)
+        {
+            lightCountdown += 1f * Time.deltaTime;
+            if(lightCountdown > maxLightCountdown)
+            {
+                lightCountdown = maxLightCountdown;
+                isLightOn      = false;
+            }
+        }
+        if(lightCountdown > 0f && !isLightOn)
+            lightCountdown -= 1f * Time.deltaTime;
+        else if(lightCountdown < 0f)
+            lightCountdown = 0f;
         lightPowerField.enabled = isLightOn;
+        
         movement = Input.GetAxis("Vertical");
         if(transform.position.z > 0f || movement > 0)
         {
             rigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
         }
-        if(Input.GetButtonDown("Fire1"))
-        {
-            startLightTime = Time.time;
-            isLightOn = true;
-            StartCoroutine("LightOn");
-        }
-        if(Input.GetButtonUp("Fire1") || (isLightOn && Time.time - startLightTime > lightOnTime))
-        {    
-            isLightOn = false;
-            Debug.Log("Time:" + (Time.time - startLightTime).ToString());
-            StartCoroutine("LightOff");
-        }
+        
         if(decreaseHP)
         {
             hp--;
@@ -62,6 +78,21 @@ public class PlayerController : MonoBehaviour
         }
         if(hp <= 0)
             Death();
+    }
+
+    public float GetLightCountdown()
+    {
+        return lightCountdown;
+    }
+
+    public bool GetDecreaseHP()
+    {
+        return decreaseHP;
+    }
+
+    public float GetMaxLightCountdown()
+    {
+        return maxLightCountdown;
     }
 
     IEnumerator LightOn()
@@ -92,13 +123,15 @@ public class PlayerController : MonoBehaviour
     
     void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.CompareTag("Hook With Lamp"))
+        if(col.gameObject.CompareTag("Lamp"))
         {
             if(Input.GetButtonDown("Jump") && hp < maxHP)
             {
                 hp++;
                 col.enabled = false;
                 col.gameObject.GetComponent<Light>().enabled = false;
+                SpriteRenderer turnedOffLamp = GameObject.FindGameObjectWithTag("Turned Off Lamp").GetComponent<SpriteRenderer>();
+                col.gameObject.GetComponent<SpriteRenderer>().sprite = turnedOffLamp.sprite;
             }
         }
     }

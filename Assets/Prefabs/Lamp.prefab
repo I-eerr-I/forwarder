@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5114025577056014972}
   - component: {fileID: 6191607162760466155}
-  - component: {fileID: 8020486636726478631}
+  - component: {fileID: 1949382625615909367}
+  - component: {fileID: 7265669545273992258}
   m_Layer: 0
   m_Name: Lamp
-  m_TagString: Untagged
+  m_TagString: Lamp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +83,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!108 &8020486636726478631
+--- !u!65 &1949382625615909367
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5148940567038933324}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 2.5, z: 1.78}
+  m_Center: {x: -0.75, y: -0.5, z: 0}
+--- !u!108 &7265669545273992258
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,7 +108,7 @@ Light:
   m_Type: 2
   m_Color: {r: 0.9411765, g: 0.9529412, b: 0.39215687, a: 1}
   m_Intensity: 2
-  m_Range: 10
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
