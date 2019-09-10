@@ -10,6 +10,7 @@ TagManager:
   - Light Power Field
   - Lamp
   - Turned Off Lamp
+  - Player Follower
   layers:
   - Default
   - TransparentFX

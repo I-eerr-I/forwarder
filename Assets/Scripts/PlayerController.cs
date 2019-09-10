@@ -15,14 +15,9 @@ public class PlayerController : MonoBehaviour
     [Space]
     public int hp;
     
-    private float minLight;
-    private float maxLight          = 3f;
-    private float maxLightCountdown = 5f;
-    private float lightCountdown    = 0f;
-    private float maxLightTime      = 5f;
-    private bool  isLightOn;
-    
-    private bool  decreaseHP;
+    private bool decreaseHP;
+    private bool lampHelp;
+    private bool powerLightOn;
 
     private float movement;
 
@@ -34,36 +29,21 @@ public class PlayerController : MonoBehaviour
         hp          = maxHP;
         rigidbody   = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        minLight    = light.intensity;
         lightPowerField.enabled = false;
     }
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1") && !isLightOn && lightCountdown <= 0f)
+        if(Input.GetButtonDown("Fire1"))
         {
-            isLightOn      = true;
-            StartCoroutine("LightOn");
+            powerLightOn = true;
         }
-        if(Input.GetButtonUp("Fire1") || !isLightOn)
-        {    
-            isLightOn      = false;
-            StartCoroutine("LightOff");
-        }
-        if(isLightOn)
+        if(Input.GetButtonUp("Fire1"))
         {
-            lightCountdown += 1f * Time.deltaTime;
-            if(lightCountdown > maxLightCountdown)
-            {
-                lightCountdown = maxLightCountdown;
-                isLightOn      = false;
-            }
+            powerLightOn = false;
         }
-        if(lightCountdown > 0f && !isLightOn)
-            lightCountdown -= 1f * Time.deltaTime;
-        else if(lightCountdown < 0f)
-            lightCountdown = 0f;
-        lightPowerField.enabled = isLightOn;
+
+        lightPowerField.enabled = powerLightOn;
         
         movement = Input.GetAxis("Vertical");
         if(transform.position.z > 0f || movement > 0)
@@ -80,40 +60,24 @@ public class PlayerController : MonoBehaviour
             Death();
     }
 
-    public float GetLightCountdown()
-    {
-        return lightCountdown;
-    }
-
     public bool GetDecreaseHP()
     {
         return decreaseHP;
     }
 
-    public float GetMaxLightCountdown()
+    public float GetCurrentHP()
     {
-        return maxLightCountdown;
+        return hp;
     }
 
-    IEnumerator LightOn()
+    public bool GetLampHelp()
     {
-        float lightStrength = light.intensity;
-        for(; lightStrength < maxLight; lightStrength += 0.1f)
-        {
-            light.intensity = lightStrength;
-            yield return null;
-        }
+        return lampHelp;
     }
 
-    IEnumerator LightOff()
+    public bool GetPowerLightOn()
     {
-        StopCoroutine("LightOn");
-        float lightStrength = light.intensity;
-        for(; lightStrength > minLight; lightStrength -= 0.1f)
-        {
-            light.intensity = lightStrength;
-            yield return null;
-        }
+        return powerLightOn;
     }
 
     void Death()
@@ -129,6 +93,7 @@ public class PlayerController : MonoBehaviour
             {
                 hp++;
                 col.enabled = false;
+                lampHelp    = true;
                 col.gameObject.GetComponent<Light>().enabled = false;
                 SpriteRenderer turnedOffLamp = GameObject.FindGameObjectWithTag("Turned Off Lamp").GetComponent<SpriteRenderer>();
                 col.gameObject.GetComponent<SpriteRenderer>().sprite = turnedOffLamp.sprite;

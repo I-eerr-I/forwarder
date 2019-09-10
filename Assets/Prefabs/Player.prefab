@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1511247592}
   - component: {fileID: 1511247593}
+  - component: {fileID: 984344324}
   m_Layer: 0
   m_Name: PlayerLight
   m_TagString: Untagged
@@ -91,6 +92,25 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!95 &984344324
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511247591}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: df3c98df1d32dab4ca2830b8f1f000c2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2317967832364875532
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +219,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 114
-  m_CollisionDetection: 3
+  m_CollisionDetection: 1
 --- !u!114 &3585793481799898403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +236,6 @@ MonoBehaviour:
   lightPowerField: {fileID: 3082558560570270564}
   maxHP: 3
   speed: 0.5
-  lightOnTime: 5
   lightPower: 1
   hp: 0
 --- !u!1 &7661491436846151286
