@@ -1388,9 +1388,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c1782a7d030aa04cbbd91103c7468c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  middleHealthColor: {r: 1, g: 0, b: 0, a: 0.49019608}
+  lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
+  middleHealthIntensity: 1
+  lowHealthIntensity: 5
   cameraAnimationAmplitude: 0.02
   cameraAnimationSpeed: 20
-  cameraRotationAnimationAmplitude: 0.01
+  cameraRotationAnimationAmplitude: 0.001
   cameraRotationAnimationSpeed: 10
   cameraHPAnimationAmplitude: 0.001
   cameraHPAnimationSpeed: 100

@@ -14,10 +14,15 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     public int hp;
-    
+
+    private float lightOnTime         = 5f;
+    private float lightCountdownTime  = 5f;
+    private float lightCurrentTime    = 0f;
+    private bool  powerLightOn        = false;
+    private bool  lightCountdown      = false;
+
     private bool decreaseHP;
     private bool lampHelp;
-    private bool powerLightOn;
 
     private float movement;
 
@@ -34,17 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
-        {
-            powerLightOn = true;
-        }
-        if(Input.GetButtonUp("Fire1"))
-        {
-            powerLightOn = false;
-        }
-
-        lightPowerField.enabled = powerLightOn;
-        
+        PowerLightAction();        
         movement = Input.GetAxis("Vertical");
         if(transform.position.z > 0f || movement > 0)
         {
@@ -58,6 +53,38 @@ public class PlayerController : MonoBehaviour
         }
         if(hp <= 0)
             Death();
+    }
+
+    void PowerLightAction()
+    {
+        if(Input.GetButtonDown("Fire1") && !lightCountdown)
+        {
+            powerLightOn = true;
+        }
+        if(powerLightOn)
+        {
+            lightCurrentTime += Time.deltaTime;
+        }
+        if(lightCurrentTime >= lightOnTime)
+        {
+            powerLightOn   = false;
+            lightCountdown = true; 
+        }
+        if(Input.GetButtonUp("Fire1") && powerLightOn)
+        {
+            powerLightOn = false;
+            lightCurrentTime = 0f;
+        }
+        if(lightCountdown)
+        {
+            lightCurrentTime -= Time.deltaTime;
+        }
+        if(lightCountdown && lightCurrentTime <= lightOnTime - lightCountdownTime)
+        {
+            lightCountdown   = false;
+            lightCurrentTime = 0f;
+        }
+        lightPowerField.enabled = powerLightOn;
     }
 
     public bool GetDecreaseHP()
@@ -79,6 +106,12 @@ public class PlayerController : MonoBehaviour
     {
         return powerLightOn;
     }
+
+    public bool GetPowerLightCountdown()
+    {
+        return lightCountdown;
+    }
+
 
     void Death()
     {
