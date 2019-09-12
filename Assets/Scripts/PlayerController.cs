@@ -112,7 +112,6 @@ public class PlayerController : MonoBehaviour
         return lightCountdown;
     }
 
-
     void Death()
     {
         gameObject.SetActive(false);

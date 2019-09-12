@@ -1394,10 +1394,11 @@ MonoBehaviour:
   lowHealthIntensity: 5
   cameraAnimationAmplitude: 0.02
   cameraAnimationSpeed: 20
-  cameraRotationAnimationAmplitude: 0.001
-  cameraRotationAnimationSpeed: 10
-  cameraHPAnimationAmplitude: 0.001
-  cameraHPAnimationSpeed: 100
+  cameraMinRotationAnimationAmplitude: 0
+  cameraRotationAnimationSpeed: 2
+  cameraRotationAdditionFromHP: 0.02
+  cameraMaxMonsterAnimationAmplitude: 0.02
+  cameraMonsterAnimationSpeed: 100
 --- !u!1 &1000031159
 GameObject:
   m_ObjectHideFlags: 0

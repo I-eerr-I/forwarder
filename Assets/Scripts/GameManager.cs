@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if(!GameObject.FindWithTag("Enemy") && player.activeInHierarchy)
             InitEnemy();
+            
     }
 
     void InitEnemy()

@@ -11,20 +11,24 @@ public class UIManager : MonoBehaviour
     public float lowHealthIntensity    = 5f;
 
     [Space]
-    public float cameraAnimationAmplitude         = 0.02f;
-    public float cameraAnimationSpeed             = 20f;
-    public float cameraRotationAnimationAmplitude = 0.01f;
-    public float cameraRotationAnimationSpeed     = 10f;
-    public float cameraHPAnimationAmplitude       = 0.02f;
-    public float cameraHPAnimationSpeed           = 100f;
+    public float cameraAnimationAmplitude            = 0.02f;
+    public float cameraAnimationSpeed                = 20f;
+    public float cameraMinRotationAnimationAmplitude = 0f;
+    public float cameraRotationAnimationSpeed        = 10f;
+    public float cameraRotationAdditionFromHP        = 0.05f;
+    public float cameraMaxMonsterAnimationAmplitude  = 0.02f;
+    public float cameraMonsterAnimationSpeed         = 100f;
+    public float monsterScareLength = 1.5f;
+    
+    private float currentCameraRotationAnimation;
 
     private PlayerController playerController;
     private Transform player;
     private Transform camera;
-    private Animator playerLightAnimator;
-    private Light    playerLight;
-    private Light    playerHPLight;
-    private Animator playerHPLightAnimator;
+    private Animator  playerLightAnimator;
+    private Light     playerLight;
+    private Light     playerHPLight;
+    private Animator  playerHPLightAnimator;
 
     public void SetPlayerController(ref PlayerController playerController)
     {
@@ -34,6 +38,7 @@ public class UIManager : MonoBehaviour
         playerLight           = playerController.light;
         playerHPLight         = playerController.gameObject.GetComponent<Light>();
         playerHPLightAnimator = playerController.gameObject.GetComponent<Animator>();
+        currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
     }
 
     void Start()
@@ -55,16 +60,20 @@ public class UIManager : MonoBehaviour
             Color playerHPLightColor = playerHPLight.color;
             playerHPLightColor.a     = 0f;
             playerHPLight.color      = playerHPLightColor;
+
+            currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
         }
         if(50f <= hpPercents && hpPercents < 75f)
         {
             playerHPLight.color     = middleHealthColor;
             playerHPLight.intensity = middleHealthIntensity;
+            currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude + cameraRotationAdditionFromHP;
         }
         else if(hpPercents < 50f)
         {
             playerHPLight.color     = lowHealthColor;
             playerHPLight.intensity = lowHealthIntensity; 
+            currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude + cameraRotationAdditionFromHP*2f;
         }
 
         CameraAnimation();
@@ -72,12 +81,10 @@ public class UIManager : MonoBehaviour
 
     void CameraAnimation()
     {
-        float x = camera.position.x;
         float y = camera.position.y;
-        x       = (playerController.maxHP - playerController.GetCurrentHP())*cameraHPAnimationAmplitude*Mathf.Cos(Time.time*cameraHPAnimationSpeed);
-        y       = cameraAnimationAmplitude*Input.GetAxis("Vertical")*Mathf.Cos(player.position.z*cameraAnimationSpeed)+player.position.y;
-        camera.position = new Vector3(x, y, player.position.z);
-        camera.Rotate(0, 0, Input.GetAxis("Vertical")*cameraRotationAnimationAmplitude*Mathf.Cos(player.position.z*cameraRotationAnimationSpeed));
+        y = cameraAnimationAmplitude*Input.GetAxis("Vertical")*Mathf.Cos(player.position.z*cameraAnimationSpeed)+player.position.y;
+        camera.position = new Vector3(camera.position.x, y, player.position.z);
+        camera.Rotate(0, 0, currentCameraRotationAnimation*Mathf.Cos(Time.time*cameraRotationAnimationSpeed));
     }
 
     
