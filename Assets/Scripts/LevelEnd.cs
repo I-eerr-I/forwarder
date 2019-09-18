@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelEnd : MonoBehaviour
 {
+    public GameManager gameManager;
     public Animator doorAnimator;
     public AudioSource officerDoorAudio;
 
@@ -23,6 +24,9 @@ public class LevelEnd : MonoBehaviour
     void OnCollisionEnter(Collision col)
     {
         if(col.gameObject.CompareTag("Player"))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        {
+            gameManager.EndLevel();
+        }
+            
     }
 }

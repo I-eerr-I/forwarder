@@ -2,9 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AppearanceChars : MonoBehaviour
+public class EnemyParameters : MonoBehaviour
 {
-    public float notActivityProbability;
+
+    public float speed;
+    public float power;
+    public float deadRunDistance;
+    public float hp = 5f;
+    public float sightDistance;
+    public AudioClip idlingSound;
+    public AudioClip actionSound;
 
     public float minDistanceToPlayer;
     public float maxDistanceToPlayer;

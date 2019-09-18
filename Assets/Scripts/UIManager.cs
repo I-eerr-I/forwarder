@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Text dayText;
+    public GameObject dayEnd;
+
+    [Space]
     public Color middleHealthColor;
     public Color lowHealthColor;
     public float middleHealthIntensity = 1f;
@@ -20,6 +24,7 @@ public class UIManager : MonoBehaviour
     public float cameraMonsterAnimationSpeed         = 100f;
     public float monsterScareLength = 1.5f;
     
+    private int  day;
     private float currentCameraRotationAnimation;
 
     private PlayerController playerController;
@@ -39,6 +44,12 @@ public class UIManager : MonoBehaviour
         playerHPLight         = playerController.gameObject.GetComponent<Light>();
         playerHPLightAnimator = playerController.gameObject.GetComponent<Animator>();
         currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
+    }
+
+    public void SetDay(int day)
+    {
+        this.day = day;
+        dayText.text = "Day " + day.ToString();
     }
 
     void Start()
@@ -87,6 +98,9 @@ public class UIManager : MonoBehaviour
         camera.Rotate(0, 0, currentCameraRotationAnimation*Mathf.Cos(Time.time*cameraRotationAnimationSpeed));
     }
 
-    
-
+    public void UpgradeMenu()
+    {
+        if(!dayEnd.activeSelf)
+            dayEnd.SetActive(true);
+    }
 }

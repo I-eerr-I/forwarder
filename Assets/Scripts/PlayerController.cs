@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     [Space]
     public int hp;
 
+    private int   hpUpgrade    = 1;
+    private float speedUpgrade = 0.5f;
+    private float lightUpgrade = 0.5f; 
+
     private float lightOnTime         = 5f;
     private float lightCountdownTime  = 5f;
     private float lightCurrentTime    = 0f;
@@ -112,6 +116,21 @@ public class PlayerController : MonoBehaviour
         return lightCountdown;
     }
 
+    public int GetHPUpgrade()
+    {
+        return hpUpgrade;
+    }
+
+    public float GetSpeedUpgrade()
+    {
+        return speedUpgrade;
+    }
+
+    public float GetLightUpgrade()
+    {
+        return lightUpgrade;
+    }
+
     void Death()
     {
         gameObject.SetActive(false);
@@ -140,7 +159,5 @@ public class PlayerController : MonoBehaviour
             decreaseHP = true;
         }
     }
-
-    
 
 }

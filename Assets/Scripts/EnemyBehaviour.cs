@@ -4,15 +4,6 @@ using UnityEngine;
 
 public abstract class EnemyBehaviour : MonoBehaviour
 {
-    
-    
-    public float speed;
-    public float power;
-    public float deadRunDistance;
-    public float hp = 5f;
-    public AudioClip idlingSound;
-    public AudioClip actionSound;
-
     public Light light;
 
     protected bool  startedDying;
@@ -24,13 +15,15 @@ public abstract class EnemyBehaviour : MonoBehaviour
     protected PlayerController pc;
     protected Rigidbody playerRb;
 
+    protected EnemyParameters parameters;
     protected Rigidbody rb;
     protected BoxCollider boxCollider;
     protected AudioSource audioSource;
 
     void Start()
     {
-        player           = GetComponent<AppearanceChars>().GetPlayer();
+        parameters       = GetComponent<EnemyParameters>();
+        player           = parameters.GetPlayer();
         playerRb         = player.GetComponent<Rigidbody>(); 
         pc               = player.GetComponent<PlayerController>();
         rb               = GetComponent<Rigidbody>();
@@ -39,14 +32,14 @@ public abstract class EnemyBehaviour : MonoBehaviour
         startedDying     = false;
         isDying          = false;
         isAction         = false;
-        audioSource.clip = idlingSound;
+        audioSource.clip = parameters.idlingSound;
     }
 
     void Update()
     {
         if(player.activeInHierarchy)
         {
-            if(hp <= 0 && !isDying)
+            if(parameters.hp <= 0 && !isDying)
             {
                 startedDying = true;
             }
@@ -68,9 +61,9 @@ public abstract class EnemyBehaviour : MonoBehaviour
         }
         if(isDying)
             Death();
-        if(isAction && audioSource.clip != actionSound)
+        if(isAction && audioSource.clip != parameters.actionSound)
         {
-            audioSource.clip = actionSound;
+            audioSource.clip = parameters.actionSound;
             audioSource.volume += 10f;
             audioSource.Play();
         }
@@ -80,9 +73,9 @@ public abstract class EnemyBehaviour : MonoBehaviour
 
     protected virtual void Death()
     {
-        if(deadStartPosition + deadRunDistance > transform.position.z)
+        if(deadStartPosition + parameters.deadRunDistance > transform.position.z)
         {
-            rb.MovePosition(transform.position + (transform.forward * (speed*2f) * Time.deltaTime));
+            rb.MovePosition(transform.position + (transform.forward * (parameters.speed*2f) * Time.deltaTime));
         }
             
         else
@@ -93,7 +86,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Player"))
         {
-            playerRb.AddForce(new Vector3(0,0, -power * Time.deltaTime));
+            playerRb.AddForce(new Vector3(0,0, -parameters.power * Time.deltaTime));
             StartCoroutine("TurnOffCollider");
         }
     }
@@ -102,7 +95,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Light Power Field"))
         {
-            hp -= pc.lightPower * Time.deltaTime;
+            parameters.hp -= pc.lightPower * Time.deltaTime;
         }
     }
 
