@@ -14,6 +14,9 @@ public class StandingMonsterBehaviour : EnemyBehaviour
             isAction = true;
         }
         if(isAction)
+        {
             rb.MovePosition(transform.position - (transform.forward * parameters.speed * Time.deltaTime));
+        }
+            
     }
 }

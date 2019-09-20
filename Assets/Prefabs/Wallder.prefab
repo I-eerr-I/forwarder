@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3787732866031941674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 14.059281}
+  m_LocalPosition: {x: 0, y: 2, z: 10.87266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7837608976403415791}
@@ -130,13 +130,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   power: 15000
-  deadRunDistance: 2
   hp: 5
   sightDistance: 3
-  idlingSound: {fileID: 8300000, guid: 0b8ae8a4faa41c44e9565a2e4a192329, type: 3}
-  actionSound: {fileID: 8300000, guid: 483f111c13017834e80b6ae95f55ff0b, type: 3}
+  deadRunDistance: 2
   minDistanceToPlayer: 10
   maxDistanceToPlayer: 20
+  idlingSound: {fileID: 8300000, guid: 0b8ae8a4faa41c44e9565a2e4a192329, type: 3}
+  actionSound: {fileID: 8300000, guid: 483f111c13017834e80b6ae95f55ff0b, type: 3}
 --- !u!114 &8136669812608188803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424dee3ad473ed546ade39ca5f782034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  light: {fileID: 6239828887864901544}
+  frontLight: {fileID: 6239828887864901544}
 --- !u!82 &1663547033826833358
 AudioSource:
   m_ObjectHideFlags: 0

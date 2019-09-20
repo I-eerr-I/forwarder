@@ -9,29 +9,24 @@ public class GameManager : MonoBehaviour
 {
     public int day = 1;
 
-    [Space]
+    [Header("Entities")]
     public GameObject player;
     public GameObject enemy;
     
-    [Space]
+    [Header("UI")]
     public UIManager uiManager;
 
-    [Space]
+    [Header("Scene Objects")]
     public GameObject hookWithLamp;
-
-    [Space]
-    public bool debug;
-
-    [Space]
     public Transform levelEndObject;
 
-    private bool noMonsterAnymore = false;
-    private bool levelEnd = false;
-    private bool upgraded = false;
+    bool noMonsterAnymore = false;
+    bool levelEnd = false;
+    bool upgraded = false;
 
-    private PlayerController pc;
+    PlayerController pc;
 
-    private GameObject[] hooks;
+    GameObject[] hooks;
 
     void Awake()
     {
@@ -78,8 +73,8 @@ public class GameManager : MonoBehaviour
             GameObject game_enemy = Instantiate(enemy);
             EnemyParameters gameEnemyParameters = game_enemy.GetComponent<EnemyParameters>();
             gameEnemyParameters.SetPlayer(ref player);
-            gameEnemyParameters.hp += day;
-            gameEnemyParameters.speed += (((float)day)/10 * gameEnemyParameters.speed);
+            gameEnemyParameters.hp += day-1;
+            gameEnemyParameters.speed += (((float)day-1)/10 * gameEnemyParameters.speed);
         }
         else
         {

@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class EnemyParameters : MonoBehaviour
 {
-
+    [Header("Parameters")]
     public float speed;
     public float power;
-    public float deadRunDistance;
     public float hp = 5f;
     public float sightDistance;
-    public AudioClip idlingSound;
-    public AudioClip actionSound;
 
+    [Header("Behaviour Parameters")]
+    public float deadRunDistance;
     public float minDistanceToPlayer;
     public float maxDistanceToPlayer;
 
-    private GameObject player;
+    [Header("Sound")]
+    public AudioClip idlingSound;
+    public AudioClip actionSound;
+
+    GameObject player;
 
     public void SetPlayer(ref GameObject player)
     {

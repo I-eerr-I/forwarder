@@ -5,16 +5,17 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [Header("UI Objects")]
     public Text dayText;
     public GameObject dayEnd;
 
-    [Space]
+    [Header("Player Health Parameters")]
     public Color middleHealthColor;
     public Color lowHealthColor;
     public float middleHealthIntensity = 1f;
     public float lowHealthIntensity    = 5f;
 
-    [Space]
+    [Header("Camera Animation")]
     public float cameraAnimationAmplitude            = 0.02f;
     public float cameraAnimationSpeed                = 20f;
     public float cameraMinRotationAnimationAmplitude = 0f;
@@ -24,23 +25,23 @@ public class UIManager : MonoBehaviour
     public float cameraMonsterAnimationSpeed         = 100f;
     public float monsterScareLength = 1.5f;
     
-    private int  day;
-    private float currentCameraRotationAnimation;
+    int  day;
+    float currentCameraRotationAnimation;
 
-    private PlayerController playerController;
-    private Transform player;
-    private Transform camera;
-    private Animator  playerLightAnimator;
-    private Light     playerLight;
-    private Light     playerHPLight;
-    private Animator  playerHPLightAnimator;
+    PlayerController playerController;
+    Transform player;
+    Transform playerCamera;
+    Animator  playerLightAnimator;
+    Light     playerLight;
+    Light     playerHPLight;
+    Animator  playerHPLightAnimator;
 
     public void SetPlayerController(ref PlayerController playerController)
     {
         this.playerController = playerController; 
         player                = playerController.gameObject.transform;
-        playerLightAnimator   = playerController.light.GetComponent<Animator>();
-        playerLight           = playerController.light;
+        playerLight           = playerController.GetLightComponent();
+        playerLightAnimator   = playerLight.GetComponent<Animator>();
         playerHPLight         = playerController.gameObject.GetComponent<Light>();
         playerHPLightAnimator = playerController.gameObject.GetComponent<Animator>();
         currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
@@ -54,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
     }
 
     void Update()
@@ -92,10 +93,10 @@ public class UIManager : MonoBehaviour
 
     void CameraAnimation()
     {
-        float y = camera.position.y;
+        float y = playerCamera.position.y;
         y = cameraAnimationAmplitude*Input.GetAxis("Vertical")*Mathf.Cos(player.position.z*cameraAnimationSpeed)+player.position.y;
-        camera.position = new Vector3(camera.position.x, y, player.position.z);
-        camera.Rotate(0, 0, currentCameraRotationAnimation*Mathf.Cos(Time.time*cameraRotationAnimationSpeed));
+        playerCamera.position = new Vector3(playerCamera.position.x, y, player.position.z);
+        playerCamera.Rotate(0, 0, currentCameraRotationAnimation*Mathf.Cos(Time.time*cameraRotationAnimationSpeed));
     }
 
     public void UpgradeMenu()

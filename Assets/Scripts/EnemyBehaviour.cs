@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class EnemyBehaviour : MonoBehaviour
 {
-    public Light light;
+    public Light frontLight;
 
     protected bool  startedDying;
     protected bool  isDying;
@@ -50,7 +50,7 @@ public abstract class EnemyBehaviour : MonoBehaviour
         }
         else
         {
-            light.intensity *= 2;
+            frontLight.intensity *= 2;
             startedDying = true;
         }
         if(startedDying)

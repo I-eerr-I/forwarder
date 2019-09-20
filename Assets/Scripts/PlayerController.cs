@@ -5,39 +5,41 @@ using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
-    public Light light;
+    [Header("Light")]
+    public Light lampLight;
     public SphereCollider lightPowerField;
 
+    [Header("Characteristics")]
     public int   maxHP         = 3;
     public float speed         = 0.5f;
     public float lightPower    = 1f;
 
-    [Space]
+    [Header("Debug Info")]
     public int hp;
 
-    private int   hpUpgrade    = 1;
-    private float speedUpgrade = 0.5f;
-    private float lightUpgrade = 0.5f; 
+    int   hpUpgrade    = 1;
+    float speedUpgrade = 0.1f;
+    float lightUpgrade = 0.5f; 
 
-    private float lightOnTime         = 5f;
-    private float lightCountdownTime  = 5f;
-    private float lightCurrentTime    = 0f;
-    private bool  powerLightOn        = false;
-    private bool  lightCountdown      = false;
+    float lightOnTime         = 5f;
+    float lightCountdownTime  = 5f;
+    float lightCurrentTime    = 0f;
+    bool  powerLightOn        = false;
+    bool  lightCountdown      = false;
 
-    private bool decreaseHP;
-    private bool lampHelp;
+    bool decreaseHP;
+    bool lampHelp;
 
-    private float movement;
+    float movement;
 
-    private Rigidbody   rigidbody;
-    private BoxCollider boxCollider;
+    Rigidbody   playerRigidbody;
+    BoxCollider boxCollider;
     
     void Start()
     {
-        hp          = maxHP;
-        rigidbody   = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
+        hp                = maxHP;
+        playerRigidbody   = GetComponent<Rigidbody>();
+        boxCollider       = GetComponent<BoxCollider>();
         lightPowerField.enabled = false;
     }
 
@@ -47,7 +49,7 @@ public class PlayerController : MonoBehaviour
         movement = Input.GetAxis("Vertical");
         if(transform.position.z > 0f || movement > 0)
         {
-            rigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
+            playerRigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
         }
         
         if(decreaseHP)
@@ -129,6 +131,11 @@ public class PlayerController : MonoBehaviour
     public float GetLightUpgrade()
     {
         return lightUpgrade;
+    }
+
+    public Light GetLightComponent()
+    {
+        return lampLight;
     }
 
     void Death()
