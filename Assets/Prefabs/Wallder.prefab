@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3787732866031941674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 10.87266}
+  m_LocalPosition: {x: 0, y: 2, z: 49.468674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7837608976403415791}
@@ -131,10 +131,11 @@ MonoBehaviour:
   speed: 1
   power: 15000
   hp: 5
-  sightDistance: 3
+  sightDistance: 4
   deadRunDistance: 2
-  minDistanceToPlayer: 10
-  maxDistanceToPlayer: 20
+  minDistanceToPlayer: 40
+  maxDistanceToPlayer: 50
+  minAppearTimes: 1
   idlingSound: {fileID: 8300000, guid: 0b8ae8a4faa41c44e9565a2e4a192329, type: 3}
   actionSound: {fileID: 8300000, guid: 483f111c13017834e80b6ae95f55ff0b, type: 3}
 --- !u!114 &8136669812608188803

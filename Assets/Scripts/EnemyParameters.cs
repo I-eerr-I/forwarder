@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyParameters : MonoBehaviour
 {
+
     [Header("Parameters")]
     public float speed;
     public float power;
@@ -14,6 +15,7 @@ public class EnemyParameters : MonoBehaviour
     public float deadRunDistance;
     public float minDistanceToPlayer;
     public float maxDistanceToPlayer;
+    public int   minAppearTimes;
 
     [Header("Sound")]
     public AudioClip idlingSound;

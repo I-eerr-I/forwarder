@@ -1626,6 +1626,8 @@ MonoBehaviour:
   lowHealthColor: {r: 1, g: 0, b: 0, a: 1}
   middleHealthIntensity: 1
   lowHealthIntensity: 5
+  middleHealthSound: {fileID: 8300000, guid: 8445c7ed470d98c468685db716248b48, type: 3}
+  lowHealthSound: {fileID: 8300000, guid: 16718e3011a4d10438e42749c3ea73ec, type: 3}
   cameraAnimationAmplitude: 0.02
   cameraAnimationSpeed: 20
   cameraMinRotationAnimationAmplitude: 0
@@ -2116,7 +2118,6 @@ MonoBehaviour:
   uiManager: {fileID: 984507362}
   hookWithLamp: {fileID: 1583233253108857600, guid: 8e28c452a0fe84647906ebe729d54062,
     type: 3}
-  debug: 0
   levelEndObject: {fileID: 305557604}
 --- !u!1 &1538048389
 GameObject:

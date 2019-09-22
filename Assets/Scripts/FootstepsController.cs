@@ -24,7 +24,11 @@ public class FootstepsController : MonoBehaviour
         audioSource.pitch = playerController.speed/speedPitchCoef; 
         if(Input.GetButton("Vertical") && !audioSource.isPlaying)
         {
-            audioSource.clip = footsteps[Random.Range(0, footsteps.Length-1)];
+            int randomIndex = Random.Range(0, footsteps.Length-1);
+            if(audioSource.clip == footsteps[randomIndex])
+                randomIndex++;
+                randomIndex %= footsteps.Length;
+            audioSource.clip = footsteps[randomIndex];
             audioSource.PlayDelayed(delay);
         }
     }

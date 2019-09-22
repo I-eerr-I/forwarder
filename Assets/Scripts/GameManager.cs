@@ -21,8 +21,10 @@ public class GameManager : MonoBehaviour
     public Transform levelEndObject;
 
     bool noMonsterAnymore = false;
-    bool levelEnd = false;
-    bool upgraded = false;
+    bool levelEnd         = false;
+    bool upgraded         = false;
+
+    int enemyAppearanceCounter;
 
     PlayerController pc;
 
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        enemyAppearanceCounter = 0;
         player = Instantiate(player);
         pc     = player.GetComponent<PlayerController>();
         SaveData data = SaveSystem.Load(0);
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
         hookWithLamp = Instantiate(hookWithLamp);
         hookWithLamp.transform.position = randomHook.transform.position;
         hookWithLamp.transform.rotation = randomHook.transform.rotation;
+        InitEnemy();
         Destroy(randomHook);
     }
 
@@ -66,15 +70,23 @@ public class GameManager : MonoBehaviour
     void InitEnemy()
     {
         EnemyParameters chars = enemy.GetComponent<EnemyParameters>();
+        if(chars.minAppearTimes + (day-1) < ++enemyAppearanceCounter)
+        {
+            noMonsterAnymore = true;
+            return;
+        }
         if(player.transform.position.z + chars.maxDistanceToPlayer < levelEndObject.position.z - 5f)
         {
-            float distance = Random.Range(chars.minDistanceToPlayer, chars.maxDistanceToPlayer);
+            float minDistanceToPlayer = chars.minDistanceToPlayer - ((((float)day-1)/10f) * chars.minDistanceToPlayer);
+            float maxDistanceToPlayer = chars.maxDistanceToPlayer - ((((float)day-1)/10f) * chars.maxDistanceToPlayer);
+            float distance = Random.Range(minDistanceToPlayer, maxDistanceToPlayer);
             enemy.transform.position = new Vector3(0, enemy.transform.position.y, player.transform.position.z + distance);
             GameObject game_enemy = Instantiate(enemy);
             EnemyParameters gameEnemyParameters = game_enemy.GetComponent<EnemyParameters>();
             gameEnemyParameters.SetPlayer(ref player);
             gameEnemyParameters.hp += day-1;
-            gameEnemyParameters.speed += (((float)day-1)/10 * gameEnemyParameters.speed);
+            gameEnemyParameters.speed += ((((float)day-1)/10f) * gameEnemyParameters.speed);
+            uiManager.SetEnemy(ref game_enemy);
         }
         else
         {
