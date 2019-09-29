@@ -5,19 +5,23 @@ public class LevelEnd : MonoBehaviour
 {
     public GameManager gameManager;
     public Animator doorAnimator;
-    public AudioSource officerDoorAudio;
+    public AudioSource doorAudio;
+
+    private bool done;
 
     void Start()
     {
         doorAnimator.enabled = false;
+        done = false;
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player"))
+        if(col.gameObject.CompareTag("Player") && !done)
         {
             doorAnimator.enabled = true;
-            officerDoorAudio.Play();
+            doorAudio.Play();
+            done = true;
         }
     }
 

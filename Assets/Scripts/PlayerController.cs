@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     bool decreaseHP;
     bool lampHelp;
+    bool autoMove    = false;
+    bool hasControll = true;
 
     float movement;
 
@@ -47,9 +49,10 @@ public class PlayerController : MonoBehaviour
     {
         PowerLightAction();        
         movement = Input.GetAxis("Vertical");
-        if(transform.position.z > 0f || movement > 0)
+        if((hasControll && (transform.position.z > 0f || movement > 0)) || autoMove)
         {
-            playerRigidbody.MovePosition(transform.position + (transform.forward * movement * speed * Time.deltaTime));
+            if(autoMove) Movement(1f);
+            else Movement(movement);
         }
         
         if(decreaseHP)
@@ -59,6 +62,11 @@ public class PlayerController : MonoBehaviour
         }
         if(hp <= 0)
             Death();
+    }
+
+    void Movement(float moveCoef)
+    {
+        playerRigidbody.MovePosition(transform.position + (transform.forward * moveCoef * speed * Time.deltaTime));
     }
 
     void PowerLightAction()
@@ -165,6 +173,16 @@ public class PlayerController : MonoBehaviour
         {
             decreaseHP = true;
         }
+    }
+
+    public void SetAutoMove(bool autoMove)
+    {
+        this.autoMove = autoMove;
+    }
+
+    public void SetHasControll(bool hasControll)
+    {
+        this.hasControll = hasControll;
     }
 
 }

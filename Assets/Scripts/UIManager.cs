@@ -39,8 +39,6 @@ public class UIManager : MonoBehaviour
     Animator    playerHPLightAnimator;
     AudioSource playerAudioSource;
 
-    GameObject enemy;
-
     public void SetPlayerController(ref PlayerController playerController)
     {
         this.playerController = playerController; 
@@ -51,11 +49,6 @@ public class UIManager : MonoBehaviour
         playerHPLight         = playerController.gameObject.GetComponent<Light>();
         playerHPLightAnimator = playerController.gameObject.GetComponent<Animator>();
         currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
-    }
-
-    public void SetEnemy(ref GameObject enemy)
-    {
-        this.enemy = enemy;
     }
 
     public void SetDay(int day)
@@ -71,16 +64,8 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if(player.activeSelf)
+        if(player.gameObject.activeSelf)
         {
-            float distanceToEnemy = enemy.transform.position.z - player.position.z;
-            bool  enemyIsClose    = distanceToEnemy < 5f;
-            if(enemyIsClose)
-            {
-                if(!playerAudioSource.isPlaying)
-                    playerAudioSource.Play();
-                playerAudioSource.pitch = 2f-(distanceToEnemy/5f)*2f + 0.5f;
-            }
             float hpPercents = 100f*playerController.GetCurrentHP()/playerController.maxHP;
             playerLightAnimator.SetBool("Decrease HP", playerController.GetDecreaseHP());
             playerLightAnimator.SetBool("Power Light Turned On", Input.GetButtonDown("Fire1"));
@@ -93,7 +78,7 @@ public class UIManager : MonoBehaviour
                 Color playerHPLightColor = playerHPLight.color;
                 playerHPLightColor.a     = 0f;
                 playerHPLight.color      = playerHPLightColor;
-                if(playerAudioSource.isPlaying && !enemyIsClose)
+                if(playerAudioSource.isPlaying)
                     playerAudioSource.Stop();
                 currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
             }

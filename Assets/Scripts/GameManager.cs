@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
             gameEnemyParameters.SetPlayer(ref player);
             gameEnemyParameters.hp += day-1;
             gameEnemyParameters.speed += ((((float)day-1)/10f) * gameEnemyParameters.speed);
-            uiManager.SetEnemy(ref game_enemy);
         }
         else
         {
@@ -97,7 +96,7 @@ public class GameManager : MonoBehaviour
     public void EndLevel()
     {
         levelEnd   = true;
-        pc.enabled = false;
+        pc.SetHasControll(false);
         uiManager.UpgradeMenu();
         if(upgraded)
         {
