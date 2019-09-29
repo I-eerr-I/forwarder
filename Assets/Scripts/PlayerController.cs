@@ -180,6 +180,11 @@ public class PlayerController : MonoBehaviour
         this.autoMove = autoMove;
     }
 
+    public bool GetAutoMove()
+    {
+        return autoMove;
+    }
+
     public void SetHasControll(bool hasControll)
     {
         this.hasControll = hasControll;

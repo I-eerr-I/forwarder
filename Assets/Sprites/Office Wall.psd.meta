@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: 26728c8cc3d198d42b0f97840d3eb591
+guid: 0deaeafed15c6184f8ff8ea817c91ece
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8970446702716929614
-    second: Officer Door
-  - first:
-      213: -8965991827382282153
-    second: Door Edge Right
-  - first:
-      213: 5138435179442839076
-    second: Edge Left
-  - first:
-      213: -7145038078328382588
-    second: Edge Top
+      213: -7384442494991681254
+    second: Office Wall
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -98,34 +89,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Officer Door
+      name: Office Wall
       rect:
         serializedVersion: 2
-        x: 91
-        y: 0
-        width: 82
-        height: 202
-      alignment: 4
-      pivot: {x: 0, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6b291eb52141c6344a2cd08631ccb5e0
-      internalID: -8970446702716929614
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Door Edge Right
-      rect:
-        serializedVersion: 2
-        x: 173
-        y: 0
-        width: 4
-        height: 206
+        x: 67
+        y: 23
+        width: 130
+        height: 219
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,50 +103,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93128897b5352de4f9bab7d68a0e3808
-      internalID: -8965991827382282153
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Edge Left
-      rect:
-        serializedVersion: 2
-        x: 87
-        y: 0
-        width: 4
-        height: 206
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b8875ecbf47fd204391a263466f6673f
-      internalID: 5138435179442839076
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Edge Top
-      rect:
-        serializedVersion: 2
-        x: 91
-        y: 202
-        width: 82
-        height: 4
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ddf9a7f5bc7717449ba457e7fcb40d64
-      internalID: -7145038078328382588
+      spriteID: e075225c6d87fe341a788e59c014203b
+      internalID: -7384442494991681254
       vertices: []
       indices: 
       edges: []
@@ -184,7 +112,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 34f0596ce35063148af131e60a22466d
+    spriteID: e4abc5075cc4a464ca09ad4f03099b1e
     internalID: 0
     vertices: []
     indices: 

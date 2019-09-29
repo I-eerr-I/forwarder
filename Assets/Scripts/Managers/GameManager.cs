@@ -20,9 +20,15 @@ public class GameManager : MonoBehaviour
     public GameObject hookWithLamp;
     public Transform levelEndObject;
 
+    [Header("Level End")]
+    public float endPlayerSpeed = 0.4f;
+
     bool noMonsterAnymore = false;
     bool levelEnd         = false;
     bool upgraded         = false;
+    bool startUpgrade     = false;
+
+    float currentPlayerSpeed;
 
     int enemyAppearanceCounter;
 
@@ -35,6 +41,7 @@ public class GameManager : MonoBehaviour
         enemyAppearanceCounter = 0;
         player = Instantiate(player);
         pc     = player.GetComponent<PlayerController>();
+        currentPlayerSpeed = pc.speed;
         SaveData data = SaveSystem.Load(0);
         if(data != null)
         {
@@ -63,6 +70,7 @@ public class GameManager : MonoBehaviour
             
             if(!noMonsterAnymore && !GameObject.FindWithTag("Enemy") && player.activeInHierarchy)
                 InitEnemy();   
+            
             if(levelEnd)
                 EndLevel();
     }
@@ -95,15 +103,29 @@ public class GameManager : MonoBehaviour
 
     public void EndLevel()
     {
-        levelEnd   = true;
+        levelEnd = true;
         pc.SetHasControll(false);
-        uiManager.UpgradeMenu();
-        if(upgraded)
+        pc.SetAutoMove(true);
+        currentPlayerSpeed = pc.speed;
+        pc.speed = endPlayerSpeed;
+        if(startUpgrade)
         {
-            day++;
-            SaveSystem.Save(pc, this, 0);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            pc.speed = currentPlayerSpeed;
+            pc.SetHasControll(false);
+            pc.SetAutoMove(false);
+            uiManager.UpgradeMenu();
+            if(upgraded)
+            {
+                day++;
+                SaveSystem.Save(pc, this, 0);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
+    }
+
+    public void StartUpgrade()
+    {
+        startUpgrade = true;
     }
 
     public void UpgradeHP()

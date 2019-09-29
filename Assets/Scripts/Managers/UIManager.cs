@@ -9,13 +9,9 @@ public class UIManager : MonoBehaviour
     public Text dayText;
     public GameObject dayEnd;
 
-    [Header("Player Health Parameters")]
-    public Color middleHealthColor;
-    public Color lowHealthColor;
-    public float middleHealthIntensity  = 1f;
-    public float lowHealthIntensity     = 5f;
-    public float middleHealthSoundPitch = 1f;
-    public float lowHealthSoundPitch    = 1.2f;
+    // [Header("Player Health Parameters")]
+    // public float middleHealthSoundPitch = 1f;
+    // public float lowHealthSoundPitch    = 1.2f;
 
     [Header("Camera Animation")]
     public float cameraAnimationAmplitude            = 0.02f;
@@ -67,37 +63,30 @@ public class UIManager : MonoBehaviour
         if(player.gameObject.activeSelf)
         {
             float hpPercents = 100f*playerController.GetCurrentHP()/playerController.maxHP;
-            playerLightAnimator.SetBool("Decrease HP", playerController.GetDecreaseHP());
             playerLightAnimator.SetBool("Power Light Turned On", Input.GetButtonDown("Fire1"));
             playerLightAnimator.SetBool("Power Light Still On", playerController.GetPowerLightOn());
             playerLightAnimator.SetBool("Power Light Countdown", playerController.GetPowerLightCountdown());
+            playerHPLightAnimator.SetBool("Decrease HP", playerController.GetDecreaseHP());
             playerHPLightAnimator.SetFloat("HP Percents", hpPercents);
             
             if(hpPercents >= 75f)
             {
-                Color playerHPLightColor = playerHPLight.color;
-                playerHPLightColor.a     = 0f;
-                playerHPLight.color      = playerHPLightColor;
                 if(playerAudioSource.isPlaying)
                     playerAudioSource.Stop();
                 currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude;
             }
             if(50f <= hpPercents && hpPercents < 75f)
             {
-                playerAudioSource.pitch = middleHealthSoundPitch;
+                // playerAudioSource.pitch = middleHealthSoundPitch;
                 if(!playerAudioSource.isPlaying)
                     playerAudioSource.Play();            
-                playerHPLight.color     = middleHealthColor;
-                playerHPLight.intensity = middleHealthIntensity;
                 currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude + cameraRotationAdditionFromHP;
             }
             else if(hpPercents < 50f)
             {
-                playerAudioSource.pitch = lowHealthSoundPitch;
+                // playerAudioSource.pitch = lowHealthSoundPitch;
                 if(!playerAudioSource.isPlaying)
                     playerAudioSource.Play(); 
-                playerHPLight.color     = lowHealthColor;
-                playerHPLight.intensity = lowHealthIntensity; 
                 currentCameraRotationAnimation = cameraMinRotationAnimationAmplitude + cameraRotationAdditionFromHP*2f;
             }
         }

@@ -22,7 +22,7 @@ public class FootstepsController : MonoBehaviour
     {
         delay = speedDelayCoef/playerController.speed;
         audioSource.pitch = playerController.speed/speedPitchCoef; 
-        if(Input.GetButton("Vertical") && !audioSource.isPlaying)
+        if((Input.GetButton("Vertical") || playerController.GetAutoMove()) && !audioSource.isPlaying)
         {
             int randomIndex = Random.Range(0, footsteps.Length-1);
             if(audioSource.clip == footsteps[randomIndex])
